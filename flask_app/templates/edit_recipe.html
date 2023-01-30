@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Edit Recipe</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark-subtle container justify-content-around p-4 rounded">
+        <div class="d-flex justify-content-around col">
+            <h1>Edit Recipe!</h1>
+            <a href="/recipes" class="btn btn-primary d-flex align-items-center ">Back To Recipes</a>
+            <a href="/logout" class="btn btn-primary d-flex align-items-center ">Log Out</a>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <h3>Edit Recipe Below:</h3>
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->            <!-- loop through the messages -->
+            <div class="alert alert-danger" role="alert">
+                <strong>Error!</strong>
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+            </div>                  <!-- display each message in a paragraph tag -->
+        {% endif %}
+        {% endwith %}
+        <form action="/edit_recipe" method="post" class="d-flex bg-secondary rounded">
+            <div class="col p-3">
+                <input type="hidden" name="id" value={{recipe.id}}>
+                <div class="form-floating mb-3">
+                    <input type='text' name='name' class="form-control" id="floatingInput" placeholder="Name" value="{{recipe.name}}">
+                    <label for='floatingInput'>Name</label>
+                </div>
+    
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" name="description" placeholder="Leave a description here" id="floatingTextarea2" style="height: 150px">{{recipe.description}}</textarea>
+                    <label for="floatingTextarea2">Description</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" name="instruction" placeholder="Leave a instruction here" id="floatingTextarea2" style="height: 150px">{{recipe.instruction}}</textarea>
+                    <label for='floatingTextarea2'>Instruction:</label>
+                </div>
+            </div>
+
+            <div class="col p-3 d-flex flex-column justify-content-between">
+                <div class="form-floating mb-3 form-group">
+                    <input type="date" class="form-control" id="date" name="date_made">
+                    <label for="date">Date:</label>
+                </div>
+                <div class="form-group text-white">
+                    <label>Under 30 min?:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="under_30" id="flexRadioDefault1" value="Yes" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                        Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="under_30" id="flexRadioDefault2" value="No">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                        No
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-warning mb-4">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
